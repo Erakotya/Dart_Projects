@@ -46,8 +46,8 @@ class TransactionList extends StatelessWidget {
                     trailing: IconButton(
                         icon: Icon(Icons.delete),
                         color: Theme.of(context).errorColor,
-                        onPressed: () =>
-                            deleteTransaction(Transactions[index].id)),
+                        onPressed: () => deleteTransaction(Transactions[index]
+                            .id)), // changing this to just deleteTransaction(Transactions[index].id creates an error
                   ),
                 );
                 // Card(
