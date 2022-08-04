@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; //flutter packages get
 import 'package:personal_expenses/widgets/transaction_list.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         textTheme: ThemeData.light()
             .textTheme
             .copyWith(button: TextStyle(color: Colors.white)),
+        errorColor: Colors.red,
       ),
       home: MyHomePage(),
     );
@@ -81,9 +83,22 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        return new_transaction(_addNewTransaction);
+        return GestureDetector(
+          onTap: () {},
+          child: new_transaction(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
       },
     );
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) {
+        return element.id == id;
+        //returns true or false if that is the element we want to remove
+      });
+    });
   }
 
   @override
@@ -109,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: double.infinity,
               child: Chart(_recentTransactions),
             ),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),

@@ -4,8 +4,9 @@ import 'package:intl/intl.dart'; //flutter packages get
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> Transactions;
+  final Function deleteTransaction;
 
-  TransactionList(this.Transactions);
+  TransactionList(this.Transactions, this.deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +33,22 @@ class TransactionList extends StatelessWidget {
                   elevation: 5,
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                   child: ListTile(
-                      leading: CircleAvatar(
-                          radius: 30,
-                          child: Padding(
-                            padding: EdgeInsets.all(6),
-                            child: FittedBox(
-                                child: Text('\$${Transactions[index].amount}')),
-                          )),
-                      title: Text(Transactions[index].title),
-                      subtitle: Text(
-                          DateFormat.yMMMd().format(Transactions[index].date))),
+                    leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: EdgeInsets.all(6),
+                          child: FittedBox(
+                              child: Text('\$${Transactions[index].amount}')),
+                        )),
+                    title: Text(Transactions[index].title),
+                    subtitle: Text(
+                        DateFormat.yMMMd().format(Transactions[index].date)),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        color: Theme.of(context).errorColor,
+                        onPressed: () =>
+                            deleteTransaction(Transactions[index].id)),
+                  ),
                 );
                 // Card(
                 //     child: Row(
