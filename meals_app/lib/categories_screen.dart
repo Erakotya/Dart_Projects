@@ -12,6 +12,7 @@ class CategoriesScreen extends StatelessWidget {
         children:
             DUMMY_CATEGORIES //creates a list of categories from another file instead of manually inputing here.
                 .map((catData) => CategoryItem(
+                      catData.id,
                       catData.title,
                       catData.color,
                     ))
