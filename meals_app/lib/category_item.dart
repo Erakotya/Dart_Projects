@@ -14,13 +14,20 @@ class CategoryItem extends StatelessWidget {
   );
 
   void selectCategory(ctx) {
-    Navigator.of(ctx).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return CategoryMealsScreen(id, title);
-        },
-      ),
-    ); //cupertinopageroute for ios
+    Navigator.of(ctx).pushNamed(
+        //pushed the name of the route, the same provided in main file under routes
+
+        '/category-meals',
+        arguments: {
+          'id': id,
+          'title': title
+        } //these arguments are passed to the new page
+        // MaterialPageRoute(
+        //   builder: (_) {
+        //     return CategoryMealsScreen(id, title);
+        //   },
+        // ),
+        ); //cupertinopageroute for ios
   }
 
   @override
