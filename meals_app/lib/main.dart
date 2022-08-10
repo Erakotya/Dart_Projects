@@ -30,9 +30,14 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 )),
-        home: CategoriesScreen(),
+        initialRoute: '/',
+        //home: CategoriesScreen(),
+
         routes: {
-          '/category-meals': (ctx) => CategoryMealsScreen(),
+          '/': (ctx) => CategoriesScreen(),
+
+          CategoryMealsScreen.routeName: (ctx) =>
+              CategoryMealsScreen(), //or you can use the link style - "'/category_meals'"
         });
   }
 }

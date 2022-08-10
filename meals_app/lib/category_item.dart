@@ -16,8 +16,8 @@ class CategoryItem extends StatelessWidget {
   void selectCategory(ctx) {
     Navigator.of(ctx).pushNamed(
         //pushed the name of the route, the same provided in main file under routes
-
-        '/category-meals',
+        CategoryMealsScreen.routeName,
+        //  or  '/category-meals',
         arguments: {
           'id': id,
           'title': title
