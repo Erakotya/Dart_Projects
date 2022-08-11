@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './dummy_data.dart';
-import 'category_item.dart';
+import '../dummy_data.dart';
+import '../widgets/category_item.dart'; //.. means go up one level
 
 class CategoriesScreen extends StatelessWidget {
   @override
