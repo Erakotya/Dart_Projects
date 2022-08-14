@@ -5,24 +5,21 @@ import '../widgets/category_item.dart'; //.. means go up one level
 class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('DeliMeal')),
-      body: GridView(
-        padding: EdgeInsets.all(25),
-        children:
-            DUMMY_CATEGORIES //creates a list of categories from another file instead of manually inputing here.
-                .map((catData) => CategoryItem(
-                      catData.id,
-                      catData.title,
-                      catData.color,
-                    ))
-                .toList(),
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-        ),
+    return GridView(
+      padding: EdgeInsets.all(25),
+      children:
+          DUMMY_CATEGORIES //creates a list of categories from another file instead of manually inputing here.
+              .map((catData) => CategoryItem(
+                    catData.id,
+                    catData.title,
+                    catData.color,
+                  ))
+              .toList(),
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 200,
+        childAspectRatio: 3 / 2,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
       ),
     );
   }
