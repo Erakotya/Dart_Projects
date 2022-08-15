@@ -20,17 +20,20 @@ class CategoryMealsScreen extends StatelessWidget {
     final categoryMeals = DUMMY_MEALS.where((meal) {
       return meal.categories.contains(categoryId);
     }).toList();
-    return ListView.builder(
-      itemBuilder: (ctx, index) {
-        return mealItem(
-            title: categoryMeals[index].title,
-            imageUrl: categoryMeals[index].imageUrl,
-            duration: categoryMeals[index].duration,
-            complexity: categoryMeals[index].complexity,
-            affordability: categoryMeals[index].affordability,
-            id: categoryMeals[index].id);
-      },
-      itemCount: categoryMeals.length,
+    return Scaffold(
+      appBar: AppBar(title: Text(categoryTitle)),
+      body: ListView.builder(
+        itemBuilder: (ctx, index) {
+          return mealItem(
+              title: categoryMeals[index].title,
+              imageUrl: categoryMeals[index].imageUrl,
+              duration: categoryMeals[index].duration,
+              complexity: categoryMeals[index].complexity,
+              affordability: categoryMeals[index].affordability,
+              id: categoryMeals[index].id);
+        },
+        itemCount: categoryMeals.length,
+      ),
     );
   }
 }

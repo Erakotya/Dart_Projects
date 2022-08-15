@@ -4,6 +4,7 @@ import './screens/categories_screen.dart';
 import './screens/category_meals_screen.dart';
 import './screens/meal_detail_screen.dart';
 import './screens/tabs_screen.dart';
+import './screens/filters.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,11 +42,13 @@ class MyApp extends StatelessWidget {
 
         CategoryMealsScreen.routeName: (ctx) =>
             CategoryMealsScreen(), //or you can use the link style - "'/category_meals'"
+
         mealDetailScreen.routeName: (ctx) => mealDetailScreen(),
+        FilterScreen.routeName: (ctx) => FilterScreen(),
       },
       onGenerateRoute: (settings) {
         //navigates user to specified route in case the route the user wanted to go to doesnt exist by name
-        print(settings.arguments);
+        //print(settings.arguments);
         return MaterialPageRoute(
           builder: (ctx) => CategoriesScreen(),
         );
