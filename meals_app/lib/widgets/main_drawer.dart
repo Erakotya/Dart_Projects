@@ -39,10 +39,12 @@ class MainDrawer extends StatelessWidget {
             height: 20,
           ),
           buildListTile('meals', Icons.restaurant, () {
-            Navigator.of(context).pushNamed('/');
+            Navigator.of(context).pushReplacementNamed(
+                '/'); //replace existing page with new page, other wise, by using push/pushnamed, over time the side menu pages will stack on top of each other.
+            //this doesnt work the same with other pages, like categories, because we use the back button, which removes ages from stack
           }),
           buildListTile('Filters', Icons.settings, () {
-            Navigator.of(context).pushNamed(FilterScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(FilterScreen.routeName);
           }),
         ],
       ),
