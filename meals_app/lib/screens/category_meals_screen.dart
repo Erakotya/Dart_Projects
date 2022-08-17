@@ -1,38 +1,78 @@
 import 'package:flutter/material.dart';
 import '../dummy_data.dart';
 import '../widgets/meal_item.dart';
+import '../models/model.dart';
 
-class CategoryMealsScreen extends StatelessWidget {
+class CategoryMealsScreen extends StatefulWidget {
   static const routeName = '/category-meals';
 
-  // final String categoryId;
-  // final String CategoryTitle;
+  @override
+  _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
+}
 
-  // CategoryMealsScreen(this.categoryId, this.CategoryTitle);
+class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
+  String categoryTitle;
+  List<Meal> displayedMeals;
+  var _loadedInitData = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+  // void initState(){
+  //   final routeArgs =
+  //       ModalRoute.of(context).settings.arguments as Map<String, String>;
+  //   print(routeArgs);
+  //   final categoryTitle = routeArgs['title']; //used for page title
+  //   final categoryId = routeArgs['id']; //used for search
+  //   final displayedMeals = DUMMY_MEALS.where((meal) {
+  //     return meal.categories.contains(categoryId);
+  //   }).toList();
+
+  // } cant use init for this code because of ModalRoute. Both arent compatible. context relies on the widget, but init runs before the widget is built. if not modal
+  // it would have worked. the solution is to use didChangeDependencies
+
+  void _removeMeal(String mealId) {
+    setState(() {
+      displayedMeals.removeWhere((meal) => meal.id == mealId);
+    });
+  }
+
+  void didChangeDependencies() {
+    if (!_loadedInitData) {
+      //didchangedependencies run again if there been changes (state changes, aka setstate is called). solution: create a mark that signals that we are done initializing
+      final routeArgs =
+          ModalRoute.of(context).settings.arguments as Map<String, String>;
+      print(routeArgs);
+      categoryTitle = routeArgs['title']; //used for page title
+      final categoryId = routeArgs['id']; //used for search
+      displayedMeals = DUMMY_MEALS.where((meal) {
+        return meal.categories.contains(categoryId);
+      }).toList();
+      _loadedInitData = true;
+    }
+    //this will run before build, but right after the widget is created
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs =
-        ModalRoute.of(context).settings.arguments as Map<String, String>;
-    print(routeArgs);
-    final categoryTitle = routeArgs['title']; //used for page title
-    final categoryId = routeArgs['id']; //used for search
-    final categoryMeals = DUMMY_MEALS.where((meal) {
-      return meal.categories.contains(categoryId);
-    }).toList();
     return Scaffold(
       appBar: AppBar(title: Text(categoryTitle)),
       body: ListView.builder(
         itemBuilder: (ctx, index) {
           return mealItem(
-              title: categoryMeals[index].title,
-              imageUrl: categoryMeals[index].imageUrl,
-              duration: categoryMeals[index].duration,
-              complexity: categoryMeals[index].complexity,
-              affordability: categoryMeals[index].affordability,
-              id: categoryMeals[index].id);
+            title: displayedMeals[index].title,
+            imageUrl: displayedMeals[index].imageUrl,
+            duration: displayedMeals[index].duration,
+            complexity: displayedMeals[index].complexity,
+            affordability: displayedMeals[index].affordability,
+            id: displayedMeals[index].id,
+            removeItem: _removeMeal,
+          );
         },
-        itemCount: categoryMeals.length,
+        itemCount: displayedMeals.length,
       ),
     );
   }

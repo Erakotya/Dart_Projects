@@ -9,6 +9,7 @@ class mealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeItem;
 
   mealItem(
       {@required this.title,
@@ -16,7 +17,8 @@ class mealItem extends StatelessWidget {
       @required this.duration,
       @required this.complexity,
       @required this.affordability,
-      @required this.id});
+      @required this.id,
+      @required this.removeItem});
 
   String get complexityText {
     switch (complexity) {
@@ -55,10 +57,18 @@ class mealItem extends StatelessWidget {
   }
 
   void selectMeal(BuildContext context) {
-    Navigator.of(context).pushNamed(
+    Navigator.of(context)
+        .pushNamed(
+      //pushnamed is of type future. This means function is done once we pop te page we initially navigated to. Once done we call on then()
       mealDetailScreen.routeName,
       arguments: id,
-    );
+    )
+        .then((result) {
+      if (result != null) {
+        removeItem(result);
+      }
+      ;
+    });
   }
 
   @override
