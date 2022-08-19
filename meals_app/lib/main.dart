@@ -20,6 +20,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+//NOTE, IMPOTANT FOR DEVICE: main holds all global variables and some functions so you can pass values around the different pages.
+  //global variables
   Map<String, bool> _filters = {
     'gluten': false,
     'lactose': false,
@@ -34,7 +36,7 @@ class _MyAppState extends State<MyApp> {
       _filters = filterData;
       _availableMeals = DUMMY_MEALS.where((meal) {
         if (_filters['gluten'] && !meal.isGlutenFree) {
-          //if filter is set to show only gluten free && meal is gluten free, then dont show item
+          //if filter is set to show only gluten free && meal is not gluten free, then dont show item
           return false;
         }
         if (_filters['lactose'] && !meal.isLactoseFree) {
@@ -83,7 +85,8 @@ class _MyAppState extends State<MyApp> {
             _availableMeals), //or you can use the link style - "'/category_meals'"
 
         mealDetailScreen.routeName: (ctx) => mealDetailScreen(),
-        FilterScreen.routeName: (ctx) => FilterScreen(_filters, _setFilters),
+        FilterScreen.routeName: (ctx) => FilterScreen(_filters,
+            _setFilters), //IMPORTANT, we send pointers, so the function used in main and can therefor access variables in main from another page
       },
       onGenerateRoute: (settings) {
         //navigates user to specified route in case the route the user wanted to go to doesnt exist by name
