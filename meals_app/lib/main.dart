@@ -1,17 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/dummy_data.dart';
 import 'package:meals_app/screens/tabs_screen.dart';
 import './screens/categories_screen.dart';
 import './screens/category_meals_screen.dart';
 import './screens/meal_detail_screen.dart';
 import './screens/tabs_screen.dart';
 import './screens/filters.dart';
+import './dummy_data.dart';
+import './models/model.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map<String, bool> _filters = {
+    'gluten': false,
+    'lactose': false,
+    'vegan': false,
+    'vegetarian': false,
+  };
+
+  List<Meal> _availableMeals = DUMMY_MEALS;
+
+  void _setFilters(Map<String, bool> filterData) {
+    setState(() {
+      _filters = filterData;
+      _availableMeals = DUMMY_MEALS.where((meal) {
+        if (_filters['gluten'] && !meal.isGlutenFree) {
+          //if filter is set to show only gluten free && meal is gluten free, then dont show item
+          return false;
+        }
+        if (_filters['lactose'] && !meal.isLactoseFree) {
+          return false;
+        }
+        if (_filters['vegan'] && !meal.isVegan) {
+          return false;
+        }
+        if (_filters['vegetarian'] && !meal.isVegetarian) {
+          return false;
+        }
+        return true;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,11 +79,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => TabScreen(),
 
-        CategoryMealsScreen.routeName: (ctx) =>
-            CategoryMealsScreen(), //or you can use the link style - "'/category_meals'"
+        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(
+            _availableMeals), //or you can use the link style - "'/category_meals'"
 
         mealDetailScreen.routeName: (ctx) => mealDetailScreen(),
-        FilterScreen.routeName: (ctx) => FilterScreen(),
+        FilterScreen.routeName: (ctx) => FilterScreen(_filters, _setFilters),
       },
       onGenerateRoute: (settings) {
         //navigates user to specified route in case the route the user wanted to go to doesnt exist by name
