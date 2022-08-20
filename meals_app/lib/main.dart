@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
 
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
@@ -51,6 +52,28 @@ class _MyAppState extends State<MyApp> {
         return true;
       }).toList();
     });
+  }
+
+  void _toggleFavorite(String mealId) {
+    //check if element exists in favorite list
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    //yes: remove item from favorite list
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    }
+    //no: find the first item (essentially, find the item) with the corresponding it, and add to list. want unfiltered options (dummy_data) unlike before (we usr _favortieMeals in prev. if())
+    else {
+      setState(() {
+        _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  } //if item exists in favoritre list, remove it, bc it is a toggle method
+
+  bool _isMealFavorite(String id) {
+    return _favoriteMeals.any((meal) => meal.id == id);
   }
 
   @override
@@ -79,12 +102,13 @@ class _MyAppState extends State<MyApp> {
       //home: CategoriesScreen(),
 
       routes: {
-        '/': (ctx) => TabScreen(),
+        '/': (ctx) => TabScreen(_favoriteMeals),
 
         CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(
             _availableMeals), //or you can use the link style - "'/category_meals'"
 
-        mealDetailScreen.routeName: (ctx) => mealDetailScreen(),
+        mealDetailScreen.routeName: (ctx) =>
+            mealDetailScreen(_toggleFavorite, _isMealFavorite),
         FilterScreen.routeName: (ctx) => FilterScreen(_filters,
             _setFilters), //IMPORTANT, we send pointers, so the function used in main and can therefor access variables in main from another page
       },
