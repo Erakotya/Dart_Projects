@@ -146,3 +146,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+// in devices project we can use pop() to open a small window and go back to page (alert pops up)
