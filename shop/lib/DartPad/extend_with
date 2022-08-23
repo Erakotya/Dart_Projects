@@ -1,0 +1,44 @@
+
+mixin Agility{
+  var speed = 10;
+  void sitDown(){
+    print('Sitting down...');
+  }
+}
+
+mixin Character{
+  var hair_color = 'blonde';
+  
+}
+
+class Mammal{
+  void breathe(){
+    print('breathe in...Breathe out...');
+  }
+}
+
+
+class Person extends Mammal with Agility,Character{
+  
+  String name;
+  int age;
+  
+  Person(this.name,this.age);
+//   @override
+//   breathe(){
+//     print('loz');
+//   }
+}
+
+void main(){
+  final pers=Person('Max',30);
+  print(pers.name);
+  pers.breathe();
+  print(pers.speed);
+  pers.sitDown();
+  print(pers.hair_color);
+}
+
+//the difference between with and extend: extend hints on a stronger connection between two classes,
+//and with hints on a weaker connection
+// you can extend only once (have one parent), but as many mixin as we want
