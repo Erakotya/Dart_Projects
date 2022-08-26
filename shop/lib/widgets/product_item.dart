@@ -12,7 +12,10 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //the of() method here will obtain the nearest Provider up its widget tree and returns its value
     final product = Provider.of<Product>(context);
+    //thanks to the ChangeNotifierProvider in products_grid, we are given the choice to listen to changes coming from Product, in the essence, giving us direct access to the variables,
+    //instead of passing them through constructor
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
