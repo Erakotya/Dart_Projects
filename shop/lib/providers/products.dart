@@ -38,13 +38,33 @@ class Products with ChangeNotifier {
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
+
+  var _showFavoritesOnly = false;
+
   List<Product> get items {
+    // if (_showFavoritesOnly) { //we removed this and next few parts because we dont want to manage the state in a global appwide state. Instead we want it in our widget ()
+    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
+    // }
     return [..._items]; //... indicated we take a copy of _items
+  }
+
+  List<Product> get favoriteItems {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
+
+  // void showFavoritesOnly() {
+  //   _showFavoritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavoritesOnly = false;
+  //   notifyListeners();
+  // }
 
   void addProduct() {
     //_items.add(value);
