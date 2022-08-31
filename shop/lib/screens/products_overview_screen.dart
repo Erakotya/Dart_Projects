@@ -5,6 +5,7 @@ import '../widgets/products_grid.dart';
 import 'package:provider/provider.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
+import './cart_screen.dart';
 
 //enums are used to assign labels to integers. In the background flutter runs numbers, but we as developers, can have an easier time woring with it
 enum FilterOptions {
@@ -58,7 +59,9 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
             icon: Icon(
               Icons.shopping_cart,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(CartScreen.routeName);
+            },
           ),
         )
       ]),
