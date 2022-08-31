@@ -42,7 +42,7 @@ class Products with ChangeNotifier {
   var _showFavoritesOnly = false;
 
   List<Product> get items {
-    // if (_showFavoritesOnly) { //we removed this and next few parts because we dont want to manage the state in a global appwide state. Instead we want it in our widget ()
+    // if (_showFavoritesOnly) { //we removed this and next few parts because we dont want to manage the state in a global appwide state. Instead we want it in our widget () which is directly effected b the changes
     //   return _items.where((prodItem) => prodItem.isFavorite).toList();
     // }
     return [..._items]; //... indicated we take a copy of _items

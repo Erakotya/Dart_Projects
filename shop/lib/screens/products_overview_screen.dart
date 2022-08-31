@@ -3,6 +3,8 @@ import '../providers/products.dart';
 import '../widgets/product_item.dart';
 import '../widgets/products_grid.dart';
 import 'package:provider/provider.dart';
+import '../widgets/badge.dart';
+import '../providers/cart.dart';
 
 //enums are used to assign labels to integers. In the background flutter runs numbers, but we as developers, can have an easier time woring with it
 enum FilterOptions {
@@ -45,6 +47,19 @@ class _ProductsOverViewScreenState extends State<ProductsOverViewScreen> {
                 child: Text('Only Favorites'), value: FilterOptions.Favorites),
             PopupMenuItem(child: Text('Show All'), value: FilterOptions.All),
           ],
+        ),
+        Consumer<Cart>(
+          builder: (_, cart, ch) => Badge(
+            //when provider notices new changes in cart, 'builder' under consumer is the only thing that rebuilds
+            child: ch,
+            value: cart.itemCount.toString(),
+          ),
+          child: IconButton(
+            icon: Icon(
+              Icons.shopping_cart,
+            ),
+            onPressed: () {},
+          ),
         )
       ]),
       body: ProductsGrid(_showOnlyFavorites),

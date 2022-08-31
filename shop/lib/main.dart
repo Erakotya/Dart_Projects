@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => Products(),
+        ChangeNotifierProvider.value(
+          value: Products(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Cart(),
+        ChangeNotifierProvider.value(
+          value: Cart(),
         )
       ], //depending on provider version (if greater or == to 4.0.0), need to use create method and not builder
       //create an instance a level above those widgets which would need access to it. We provide an opportunity for MaterialApps and its children to listen to Products()

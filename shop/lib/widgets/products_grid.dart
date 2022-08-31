@@ -10,8 +10,8 @@ class ProductsGrid extends StatelessWidget {
   ProductsGrid(this.showFavs);
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<Products>(
-        context); //this indicated that the class ProductsGrid is listening to changes coming from Products()
+    //this indicated that the class ProductsGrid is listening to changes coming from Products()
+    final productsData = Provider.of<Products>(context);
     final products = showFavs ? productsData.favoriteItems : productsData.items;
     //final products = productsData.items; // after caling on Products(), we create a variable that hold oll the items in it, which are of type Product()
     return GridView.builder(
